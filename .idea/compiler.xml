@@ -18,6 +18,7 @@
         <module name="people-service" />
         <module name="kafka-consumer-service" />
         <module name="kafka-producer-service" />
+        <module name="data-upload-service" />
         <module name="account-service" />
         <module name="project-service" />
         <module name="darshan-service" />
@@ -26,7 +27,6 @@
     <bytecodeTargetLevel>
       <module name="cache-service" target="11" />
       <module name="config-server (1)" target="11" />
-      <module name="data-upload-service" target="11" />
       <module name="gateway-service" target="11" />
     </bytecodeTargetLevel>
   </component>

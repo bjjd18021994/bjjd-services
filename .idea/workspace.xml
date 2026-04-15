@@ -4,35 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d34eb4f4-fd9c-415b-bdb2-7306f9ac540d" name="Changes" comment="JaiMataKi">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../config-server-git-repo/config-server-git-repo.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../k8s-manifest/k8s-manifest.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/Jenkinsfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/k8s/user-service1/.helmignore" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/k8s/user-service/.helmignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/k8s/user-service1/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/k8s/user-service/Chart.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/k8s/user-service1/templates/NOTES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/k8s/user-service/templates/NOTES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/k8s/user-service1/templates/_helpers.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/k8s/user-service/templates/_helpers.tpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/k8s/user-service1/templates/deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/k8s/user-service/templates/deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/k8s/user-service1/templates/service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/k8s/user-service/templates/service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/k8s/user-service1/templates/tests/test-connection.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/k8s/user-service/templates/tests/test-connection.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/k8s/user-service1/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/k8s/user-service/values.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="d34eb4f4-fd9c-415b-bdb2-7306f9ac540d" name="Changes" comment="JaiMataKi" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ChangesViewManager">
-    <option name="groupingKeys">
-      <option value="repository" />
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -43,6 +19,22 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
+  <component name="GitLabMergeRequestFiltersHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPENED",
+    "assignee": {
+      "type": "org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue",
+      "username": "rajivbansal2981",
+      "fullname": "Rajiv Kumar Bansal"
+    }
+  }
+}]]></component>
+  <component name="GitLabMergeRequestsSettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "first": "https://gitlab.com/bjjd-group/bjjd-services.git",
+    "second": "c8e02d06-a54a-46de-b5a7-2b0352141929"
+  }
+}]]></component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
     <option name="recentBranches">
@@ -75,14 +67,16 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
-        <option name="useMavenConfig" value="true" />
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
   </component>
   <component name="MavenRunner">
     <option name="skipTests" value="true" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
   <component name="ProjectId" id="2CnCl0r3qYSrKhvguHnM5VRwPqO" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -91,23 +85,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/rajivbansal2981/IdeaProjects/message-sender-service&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/BJJDGitlabProjects/bjjd-services",
+    "settings.editor.selected.configurable": "vcs.Git"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;ChangesTree.GroupingKeys&quot;: [
-      &quot;module&quot;,
-      &quot;directory&quot;,
-      &quot;repository&quot;
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "module",
+      "directory",
+      "repository"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.jmk.message.model" />
