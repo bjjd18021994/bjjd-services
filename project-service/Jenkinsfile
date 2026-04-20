@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    GITHUB_CREDENTIALS = credentials('gitlab-credentials-id')
+    GITHUB_CREDENTIALS = credentials('github-credentials-id')
   }
   tools {
     maven 'M3'
@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Checkout from Git Repository') {
       steps {
-        git url: 'https://gitlab.com/bjjd-group/bjjd-services.git', branch: 'master'
+        git url: 'https://github.com/bjjd18021994/bjjd-services.git', branch: 'master'
       }
     }
     stage('QualityStatusGateCheck') {
