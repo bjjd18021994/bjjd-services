@@ -8,8 +8,8 @@ config:
   springActiveProfile: "kubernetes"
   databaseHostname: "to-be-fetched-from-hashicorp-vault"
   databaseRootUser: "to-be-fetched-from-hashicorp-vault"
-  databaseName: "project_db"
-  databasePort: "3306"
+  databaseName: "projects_db"
+  databasePort: "5432"
   databaseUsername: "to-be-fetched-from-hashicorp-vault"
 
 secret:

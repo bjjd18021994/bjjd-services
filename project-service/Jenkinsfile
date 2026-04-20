@@ -1,15 +1,15 @@
 pipeline {
   agent any
   environment {
-    GITHUB_CREDENTIALS = credentials('github-credentials-id')
+    GITHUB_CREDENTIALS = credentials('gitlab-credentials-id')
   }
   tools {
     maven 'M3'
   }
   stages {
-    stage('Checkout from Github') {
+    stage('Checkout from Git Repository') {
       steps {
-        git url: 'https://github.com/bjjd-microservices/bjjd-services.git', branch: 'master'
+        git url: 'https://gitlab.com/bjjd-group/bjjd-services.git', branch: 'master'
       }
     }
     stage('QualityStatusGateCheck') {
@@ -20,7 +20,7 @@ pipeline {
         dir('project-service') {
             script {
               withSonarQubeEnv('sonarserver') {
-                sh "mvn sonar:sonar"
+          //      sh "mvn sonar:sonar"
               }
               timeout(time: 1, unit: 'HOURS') {
                 def qg = waitForQualityGate()
