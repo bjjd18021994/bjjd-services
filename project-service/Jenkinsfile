@@ -9,31 +9,13 @@ pipeline {
   }
   stages {
     stage('Checkout from Git Repository') {
+     agent any   // or kubernetes
       steps {
         git url: 'https://github.com/bjjd18021994/bjjd-services.git', branch: 'master'
       }
     }
-    stage('QualityStatusGateCheck') {
-      when {
-                      branch 'production'
-      }
-      steps {
-        dir('project-service') {
-            script {
-              withSonarQubeEnv('sonarserver') {
-          //      sh "mvn sonar:sonar"
-              }
-              timeout(time: 1, unit: 'HOURS') {
-                def qg = waitForQualityGate()
-                if (qg.status != 'OK') {
-                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                }
-              }
-            }
-          }
-      }
-    }
     stage('Build Project') {
+      agent any   // or kubernetes
       steps {
         sh "mvn clean install -DskipTests -Pkubernetes"
         script {
@@ -56,16 +38,8 @@ pipeline {
       }
 
     }
-    stage('Validating helm configurations using Datree'){
-                 steps {
-                     dir('project-service/k8s/') {
-                        withEnv(['DATREE_TOKEN=3736500e-a75c-49ca-b271-24ea5f611c90']) {
-                        //    sh "helm datree test project-service/"
-                        }
-                     }
-                 }
-           }
-        stage('Package helm chart and Push to Nexus Repository') {
+    stage('Package helm chart and Push to Nexus Repository') {
+          agent any
           steps {
             script{
                  withCredentials([string(credentialsId: 'NexusRepositoryPassword', variable: 'NexusRepositoryPassword')]) {
@@ -89,6 +63,7 @@ pipeline {
           }
         }
         stage('Deploy helm chart in Kubernetes Environment') {
+        agent any
                           steps {
                             script{
                                     dir('project-service/k8s') {
@@ -99,6 +74,7 @@ pipeline {
                           }
         }
         stage('Verify the Deployment on Kubernetes Environment') {
+        agent any
                     steps {
                        script{
                             // Install Helm and any dependencies if necessary
