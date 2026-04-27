@@ -1,0 +1,44 @@
+pipeline:
+  name: project-service
+  identifier: projectservice
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: bjjdgithubconnector
+        build: <+input>
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: helmdelegatedepl
+              namespace: bjjd
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: GitClone
+                  name: Git Repo
+                  identifier: Git_Repo
+                  spec:
+                    connectorRef: bjjdgithubconnector
+                    build:
+                      type: branch
+                      spec:
+                        branch: master
