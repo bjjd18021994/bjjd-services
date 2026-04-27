@@ -46,15 +46,17 @@ pipeline {
       steps {
         dir('people-service') {
           withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
-            //1. Build docker image
-             sh "docker build -t rajivbansal2981/people-service:${env.version} ."
+             echo "Building Docker image"
+             sh "docker build -t bjjd18021994/people-service:${env.version} ."
 
-            //2. Login and push docker image
-            sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
-            sh "docker push rajivbansal2981/people-service:${env.version}"
+            echo "Logging into Docker Hub"
+            sh "docker login -u bjjd18021994 -p ${DockerHubPassword}"
 
-            //3. Remove docker image from jenkins machine
-            sh "docker rmi rajivbansal2981/people-service:${env.version}"
+            echo "Pushing Docker image"
+            sh "docker push bjjd18021994/people-service:${env.version}"
+
+            echo "Remove docker image from jenkins machine"
+            sh "docker rmi bjjd18021994/people-service:${env.version}"
           }
         }
       }
