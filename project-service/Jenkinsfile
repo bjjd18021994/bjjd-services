@@ -1,46 +1,76 @@
-@Library('jenkins-shared-lib') _
 pipeline {
-  agent none
+  agent any
   environment {
     GITHUB_CREDENTIALS = credentials('github-credentials-id')
   }
+  tools {
+    maven 'M3'
+  }
   stages {
     stage('Checkout from Git Repository') {
-     agent any   // or kubernetes
       steps {
         git url: 'https://github.com/bjjd18021994/bjjd-services.git', branch: 'master'
       }
     }
+    stage('QualityStatusGateCheck') {
+      when {
+                      branch 'production'
+      }
+      steps {
+        dir('project-service') {
+            script {
+              withSonarQubeEnv('sonarserver') {
+          //      sh "mvn sonar:sonar"
+              }
+              timeout(time: 1, unit: 'HOURS') {
+                def qg = waitForQualityGate()
+                if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                }
+              }
+            }
+          }
+      }
+    }
     stage('Build Project') {
-      agent any   // or kubernetes
-       tools {
-          maven 'M3'
-        }
       steps {
         sh "mvn clean install -DskipTests -Pkubernetes"
         script {
           def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-          echo version
+          print version
           env.version = version
         }
       }
     }
     stage('Build Docker Image and Push on Docker Hub') {
-     agent any
       steps {
         dir('project-service') {
-           buildAndPushImage(
-                 credentialsId: 'dockerhub-creds',
-                 context: '.',
-                 dockerfile: 'Dockerfile',
-                 image: 'bjjd18021994/project-service:${env.version}'
-           )
+          withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
+            echo "Building Docker image"
+             sh "docker build -t bjjd18021994/project-service:${env.version} ."
+
+            echo "Logging into Docker Hub"
+            sh "docker login -u bjjd18021994 -p ${DockerHubPassword}"
+
+             echo "Pushing Docker image"
+            sh "docker push bjjd18021994/project-service:${env.version}"
+
+            echo "Remove docker image from jenkins machine"
+            sh "docker rmi bjjd18021994/project-service:${env.version}"
+          }
         }
       }
-
     }
-    stage('Package helm chart and Push to Nexus Repository') {
-          agent any
+    stage('Validating helm configurations using Datree'){
+                 steps {
+                     dir('project-service/k8s/') {
+                        withEnv(['DATREE_TOKEN=3736500e-a75c-49ca-b271-24ea5f611c90']) {
+                        //    sh "helm datree test project-service/"
+                        }
+                     }
+                 }
+           }
+        stage('Package helm chart and Push to Nexus Repository') {
           steps {
             script{
                  withCredentials([string(credentialsId: 'NexusRepositoryPassword', variable: 'NexusRepositoryPassword')]) {
@@ -64,7 +94,6 @@ pipeline {
           }
         }
         stage('Deploy helm chart in Kubernetes Environment') {
-        agent any
                           steps {
                             script{
                                     dir('project-service/k8s') {
@@ -75,7 +104,6 @@ pipeline {
                           }
         }
         stage('Verify the Deployment on Kubernetes Environment') {
-        agent any
                     steps {
                        script{
                             // Install Helm and any dependencies if necessary
