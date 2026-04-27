@@ -4,9 +4,6 @@ pipeline {
   environment {
     GITHUB_CREDENTIALS = credentials('github-credentials-id')
   }
-  tools {
-    maven 'M3'
-  }
   stages {
     stage('Checkout from Git Repository') {
      agent any   // or kubernetes
@@ -16,16 +13,20 @@ pipeline {
     }
     stage('Build Project') {
       agent any   // or kubernetes
+       tools {
+          maven 'M3'
+        }
       steps {
         sh "mvn clean install -DskipTests -Pkubernetes"
         script {
           def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-          print version
+          echo version
           env.version = version
         }
       }
     }
     stage('Build Docker Image and Push on Docker Hub') {
+     agent any
       steps {
         dir('project-service') {
            buildAndPushImage(
