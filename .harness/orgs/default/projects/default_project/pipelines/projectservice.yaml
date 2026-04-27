@@ -42,3 +42,12 @@ pipeline:
                       type: branch
                       spec:
                         branch: master
+              - step:
+                  type: Run
+                  name: maven build
+                  identifier: maven_build
+                  spec:
+                    connectorRef: dockerhub
+                    image: maven:3-jdk-10
+                    shell: Sh
+                    command: mvn clean install -DskipTests -Pkubernetes
