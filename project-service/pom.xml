@@ -54,11 +54,14 @@
 				<artifactId>jib-maven-plugin</artifactId>
 				<version>${jib-maven-plugin.version}</version>
 				<configuration>
+                    <from>
+                        <image>eclipse-temurin:17-jre-jammy</image>
+                    </from>
 					 <to>
 						<image>registry.hub.docker.com/bjjd18021994/project-service:${jmk-version}</image>
 						<auth>
-							<username>bjjd18021994</username>
-							<password>JaiMataKi@379</password>
+                            <username>${env.DOCKER_USERNAME}</username>
+                            <password>${env.DOCKER_PASSWORD}</password>
 						</auth>
 					</to>
                     <container>

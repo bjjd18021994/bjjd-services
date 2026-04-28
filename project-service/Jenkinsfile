@@ -18,11 +18,13 @@ pipeline {
     stage('Build Project') {
       steps {
         dir('project-service') {
-            sh "mvn clean install -DskipTests -Pkubernetes"
-            script {
-              def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-              print version
-              env.version = version
+            withCredentials([usernamePassword(
+              credentialsId: 'dockerhub-creds',
+              usernameVariable: 'DOCKER_USERNAME',
+              passwordVariable: 'DOCKER_PASSWORD'
+            )]) {
+                echo "Building the project and push the Docker image for Project Service..."
+                sh "mvn clean install -DskipTests -Pkubernetes"
             }
           }
       }
