@@ -27,22 +27,4 @@ pipeline {
           }
       }
     }
-    stage('Package helm chart and Push to Nexus Repository') {
-          steps {
-            script{
-                    dir('project-service/k8s') {
-                        def chartVersion =  sh script: "helm show chart project-service | grep version | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
-                        def chartName =  sh script: "helm show chart project-service | grep name | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
-                        def chartPackage ="${chartName}-${chartVersion}.tgz"
-                        def chartPath = "helm/project-service"
-
-                        echo "Packaging helm chart"
-                        sh "helm package ${chartPath} --version ${chartVersion}"
-
-                        //2. Pushing helm chart in nexus repository
-                  }
-            }
-          }
-        }
-  }
 }
