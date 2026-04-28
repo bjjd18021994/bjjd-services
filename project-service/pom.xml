@@ -46,8 +46,6 @@
 			<artifactId>common-service</artifactId>
 			<version>${jmk-version}</version>
 		</dependency>
-
-
 	</dependencies>
 	<build>
 		<plugins>
@@ -57,13 +55,29 @@
 				<version>${jib-maven-plugin.version}</version>
 				<configuration>
 					 <to>
-						<image>registry.hub.docker.com/rajivbansal2981/project-service:${jmk-version}</image>
+						<image>registry.hub.docker.com/bjjd18021994/project-service:${jmk-version}</image>
 						<auth>
-							<username>rajivbansal2981</username>
-							<password>rajiv379</password>
+							<username>bjjd18021994</username>
+							<password>JaiMataKi@379</password>
 						</auth>
 					</to>
+                    <container>
+                        <ports>
+                            <port>5379</port>
+                        </ports>
+                        <jvmFlags>
+                            <jvmFlag>-Dspring.profiles.active=kubernetes</jvmFlag>
+                        </jvmFlags>
+                    </container>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
