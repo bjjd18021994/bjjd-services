@@ -4,7 +4,7 @@ pipeline {
     REPO_URL = "https://github.com/bjjd18021994/helm-charts.git"
     GITHUB_CREDENTIALS = credentials('github-credentials-id')
     CHART_DIR = "helm/project-service"
-    BRANCH = "gh-pages
+    BRANCH = "gh-pages"
   }
   tools {
     maven 'M3'
