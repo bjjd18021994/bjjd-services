@@ -1,7 +1,10 @@
 pipeline {
   agent any
   environment {
+    REPO_URL = "https://github.com/bjjd18021994/helm-charts.git"
     GITHUB_CREDENTIALS = credentials('github-credentials-id')
+    CHART_DIR = "helm/project-service"
+    BRANCH = "gh-pages
   }
   tools {
     maven 'M3'
@@ -27,59 +30,75 @@ pipeline {
     stage('Package helm chart and Push to Nexus Repository') {
           steps {
             script{
-                 withCredentials([string(credentialsId: 'NexusRepositoryPassword', variable: 'NexusRepositoryPassword')]) {
                     dir('project-service/k8s') {
                         def chartVersion =  sh script: "helm show chart project-service | grep version | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
                         def chartName =  sh script: "helm show chart project-service | grep name | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
                         def chartPackage ="${chartName}-${chartVersion}.tgz"
-                        def chartPath = "project-service"
+                        def chartPath = "helm/project-service"
 
-                        //1. Packaging helm chart
+                        echo "Packaging helm chart"
                         sh "helm package ${chartPath} --version ${chartVersion}"
 
                         //2. Pushing helm chart in nexus repository
-                  //    sh """
-                  //     curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/project-service/ --upload-file project-service-0.1.0.tgz
-                  //   """
                   }
-                }
-
             }
           }
         }
-        stage('Deploy helm chart in Kubernetes Environment') {
-                          steps {
-                            script{
-                                    dir('project-service/k8s') {
-                                        //Deploying helm chart on Kubernetes environment
-                                        sh "helm upgrade --install -n bjjd-system project-service project-service"
-                                }
-                            }
-                          }
-        }
-        stage('Verify the Deployment on Kubernetes Environment') {
-                    steps {
-                       script{
-                            // Install Helm and any dependencies if necessary
-                             def RELEASE_NAME = "project-service"
-
-                            // Run Helm ls command and capture the status
-                            def releaseStatus = sh script: "helm ls -n bjjd-system --output json -f ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true
-
-                            // Checking the release status
-                            if (releaseStatus.toString().trim() == "deployed") {
-                                 echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
-                            } else {
-                                  error "Pipeline aborted due to deployment failed: ${releaseStatus}"
-                            }
-                       }
-
-                    }
-        }
   }
-  //post {
-       	//	always {
-       		//	mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", to: "rajivbansal2981@gmail.com";
-       //		}
-    //   }
+  stage('Publish to GitHub Pages (Safe + Cleanup)') {
+      steps {
+          withCredentials([usernamePassword(
+              credentialsId: 'github-credentials-id',
+              usernameVariable: 'GIT_USER',
+              passwordVariable: 'GIT_TOKEN'
+          )]) {
+
+              sh """
+              rm -rf repo
+              git clone https://${GIT_USER}:${GIT_TOKEN}@github.com/bjjd18021994/helm-charts.git repo
+
+              cd repo
+              git checkout ${BRANCH} || git checkout -b ${BRANCH}
+
+              cp ../packaged/*.tgz .
+
+              # Cleanup: keep last 5 versions per chart
+              for chart in \$(ls *.tgz | sed 's/-[0-9].*//' | sort -u); do
+                ls -t \${chart}-*.tgz | tail -n +6 | xargs -r rm -f
+              done
+
+              # Merge index safely
+              if [ -f index.yaml ]; then
+                helm repo index . --url ${HELM_REPO_URL} --merge index.yaml
+              else
+                helm repo index . --url ${HELM_REPO_URL}
+              fi
+
+              git add .
+              git commit -m "Update Helm repo with cleanup" || echo "No changes"
+              git push origin ${BRANCH}
+              """
+          }
+      }
+  }
+  stage('Deploy helm chart in Kubernetes Environment') {
+                            steps {
+                              script{
+                                      dir('project-service/k8s') {
+                                          //Deploying helm chart on Kubernetes environment
+                                          sh "helm upgrade --install -n bjjd-system --create-namespace project-service project-service"
+                                  }
+                              }
+                            }
+          }
+          stage('Health Check') {
+            steps {
+              script {
+                sh """
+                kubectl rollout status deployment/project-service -n bjjd-system --timeout=120s
+                """
+              }
+            }
+          }
+
 }
