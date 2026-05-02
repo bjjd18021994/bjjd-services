@@ -3,3 +3,25 @@ service:
   identifier: hanesskubernetesservice
   orgIdentifier: default
   projectIdentifier: default_project
+  serviceDefinition:
+    spec:
+      manifests:
+        - manifest:
+            identifier: projectservice
+            type: HelmChart
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: harness_github_connector
+                  gitFetchType: Branch
+                  folderPath: project-service/k8s/project-service
+                  repoName: bjjd-services.git
+                  branch: master
+              subChartPath: ""
+              optionalValuesYaml: false
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
+              helmVersion: V3
+              fetchHelmChartMetadata: false
+    type: NativeHelm
