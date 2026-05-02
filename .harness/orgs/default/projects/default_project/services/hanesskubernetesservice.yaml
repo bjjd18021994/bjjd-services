@@ -1,0 +1,5 @@
+service:
+  name: haness-kubernetes-service
+  identifier: hanesskubernetesservice
+  orgIdentifier: default
+  projectIdentifier: default_project
