@@ -66,7 +66,7 @@
 					</to>
                     <container>
                         <ports>
-                            <port>5379</port>
+                            <port>2379</port>
                         </ports>
                         <jvmFlags>
                             <jvmFlag>-Dspring.profiles.active=kubernetes</jvmFlag>

@@ -20,7 +20,7 @@ secret:
 replicaCount: 1
 
 image:
-  repository: rajivbansal2981/darshan-service
+  repository: bjjd18021994/darshan-service
   pullPolicy: Always #IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.0.1.RELEASE"

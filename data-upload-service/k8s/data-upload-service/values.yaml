@@ -7,7 +7,7 @@ namespace: "bjjd-system"
 replicaCount: 1
 
 image:
-  repository: rajivbansal2981/data-upload-service
+  repository: bjjd18021994/data-upload-service
   pullPolicy: Always #IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.0.1.RELEASE"

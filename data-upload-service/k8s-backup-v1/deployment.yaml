@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: data-upload-service
-        image: rajivbansal2981/data-upload-service:0.0.1.RELEASE
+        image: bjjd18021994/data-upload-service:0.0.1.RELEASE
         imagePullPolicy: Always #IfNotPresent
         ports:
           - name: http

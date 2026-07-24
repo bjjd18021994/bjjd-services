@@ -62,20 +62,39 @@
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>${jib-maven-plugin.version}</version>
-				<configuration>
-					 <to>
-						<image>registry.hub.docker.com/rajivbansal2981/people-service:${jmk-version}</image>
-						<auth>
-							<username>rajivbansal2981</username>
-							<password>rajiv379</password>
-						</auth>
-					</to>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <from>
+                        <image>eclipse-temurin:17-jre-jammy</image>
+                    </from>
+                    <to>
+                        <image>registry.hub.docker.com/bjjd18021994/people-service:${jmk-version}</image>
+                        <auth>
+                            <username>${env.DOCKER_USERNAME}</username>
+                            <password>${env.DOCKER_PASSWORD}</password>
+                        </auth>
+                    </to>
+                    <container>
+                        <ports>
+                            <port>6379</port>
+                        </ports>
+                        <jvmFlags>
+                            <jvmFlag>-Dspring.profiles.active=kubernetes</jvmFlag>
+                        </jvmFlags>
+                    </container>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 </project>
