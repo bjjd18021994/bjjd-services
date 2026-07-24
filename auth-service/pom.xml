@@ -29,7 +29,7 @@
 		<dependency>
   			<groupId>com.jmk</groupId>
 			<artifactId>common-service</artifactId>
-			<version>${jmk-version}</version>
+            <version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

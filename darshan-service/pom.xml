@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.jmk</groupId>
 			<artifactId>common-service</artifactId>
-			<version>${jmk-version}</version>
+            <version>${project.version}</version>
 		</dependency>
 		<!-- Starter for using Spring Data JPA with Hibernate to store and retrieve 
 			data in a relational database. -->

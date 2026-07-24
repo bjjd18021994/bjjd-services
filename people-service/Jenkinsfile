@@ -1,9 +1,7 @@
 pipeline {
   agent any
   environment {
-    REPO_URL = "https://github.com/bjjd18021994/helm-charts.git"
     GITHUB_CREDENTIALS = credentials('github-credentials-id')
-    CHART_DIR = "helm/people-service"
     BRANCH = "gh-pages"
   }
   tools {
@@ -17,16 +15,14 @@ pipeline {
     }
     stage('Build Project') {
       steps {
-        dir('people-service') {
             withCredentials([usernamePassword(
               credentialsId: 'dockerhub-creds',
               usernameVariable: 'DOCKER_USERNAME',
               passwordVariable: 'DOCKER_PASSWORD'
             )]) {
                 echo "Building the project and push the Docker image for Project Service..."
-                sh "mvn clean install -DskipTests -Pkubernetes"
+                sh "mvn clean install -pl people-service -am -DskipTests -Pkubernetes"
             }
-          }
       }
     }
   }

@@ -1,7 +1,6 @@
 pipeline {
   agent any
   environment {
-    REPO_URL = "https://github.com/bjjd18021994/helm-charts.git"
     GITHUB_CREDENTIALS = credentials('github-credentials-id')
     BRANCH = "gh-pages"
   }
