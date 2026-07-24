@@ -1,0 +1,13 @@
+infrastructureDefinition:
+  name: harness-kubernetes-infra
+  identifier: harnesskubernetesinfra
+  orgIdentifier: default
+  projectIdentifier: default_project
+  environmentRef: harnessdevenv
+  deploymentType: Kubernetes
+  type: KubernetesDirect
+  spec:
+    connectorRef: harnesskubernetesconnector
+    namespace: bjjd-system
+    releaseName: release-<+INFRA_KEY_SHORT_ID>
+  allowSimultaneousDeployments: false
